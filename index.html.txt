@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mèo hỏi bạn nè 🐱</title>
+
+<style>
+body {
+  background: #ffeef2;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  width: 350px;
+}
+
+.cat {
+  width: 180px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.bubble {
+  background: white;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 15px 0;
+  min-height: 60px;
+  transition: 0.3s;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  border-radius: 10px;
+  border: none;
+  background: pink;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<img class="cat" src="https://i.imgur.com/JIX9P6B.png">
+
+<div class="bubble" id="question"></div>
+
+<input type="text" id="answer" placeholder="Nhập câu trả lời...">
+<br>
+<button onclick="nextQuestion()">Next 🐾</button>
+
+<form id="hiddenForm" action="https://formspree.io/f/xdalbnjd" method="POST" style="display:none;">
+  <input type="hidden" name="Cau_1" id="q1">
+  <input type="hidden" name="Cau_2" id="q2">
+  <input type="hidden" name="Cau_3" id="q3">
+  <input type="hidden" name="Cau_4" id="q4">
+</form>
+
+</div>
+
+<script>
+const questions = [
+  "Bạn tên là gì? 💕",
+  "Hôm nay bạn cảm thấy thế nào? 🌸",
+  "Bạn có thích mèo không? 🐱",
+  "Bạn muốn nói gì với mình không? 💌"
+];
+
+let current = 0;
+let answers = [];
+
+const questionDiv = document.getElementById("question");
+
+questionDiv.innerText = questions[current];
+
+function nextQuestion() {
+  const input = document.getElementById("answer").value;
+  if (!input) return alert("Bạn chưa trả lời kìa 😺");
+
+  answers.push(input);
+  document.getElementById("answer").value = "";
+
+  current++;
+
+  if (current < questions.length) {
+    questionDiv.innerText = questions[current];
+  } else {
+    // Gán dữ liệu vào form
+    document.getElementById("q1").value = answers[0];
+    document.getElementById("q2").value = answers[1];
+    document.getElementById("q3").value = answers[2];
+    document.getElementById("q4").value = answers[3];
+
+    document.getElementById("hiddenForm").submit();
+  }
+}
+</script>
+
+</body>
+</html>
